@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // --- ACTION: PASTE YOUR GOOGLE APPS SCRIPT URL HERE ---
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/a/macros/youthopia.co/s/AKfycbwfNClVlpbNF_rwUDg3hru4P_jCYdE08s4XDN1MN6IIyhf6e1XYUcqmGftqtlIO9_Cx/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkhczTw9OcegrlgswulWNS8GXrzekE8szfu4ATHCCRvA10zks5dedrMsqJJJhBJhAr/exec';
     // --------------------------------------------------------
 
     // --- Global State ---
