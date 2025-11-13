@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEDxKL REXKL Experience</title>
+    <!-- Screenshot Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- BRANDING: Import Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- --- Start Screen --- -->
+    <div id="start-screen">
+        <h1>REXKL: The Confluence</h1>
+        <p>An interactive TEDxKL Experience</p>
+        <button id="start-button">Enter the Experience</button>
+    </div>
+
+    <!-- --- Top UI Bar --- -->
+    <div id="ui-bar">
+        <a href="#" id="home-button" title="Back to Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <div id="reward-button" title="My Reward">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="ui-stats-wrapper">
+            <div id="stamp-counter">Stamps: 0 / 11</div>
+            <div id="energy-bar-container" title="Energy">
+                <div id="energy-bar"></div>
+            </div>
+        </div>
+        <div id="profile-button" title="My Profile">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+
+    <!-- --- Pop-up Animations --- -->
+    <div id="stamp-animation">STAMP COLLECTED!</div>
+    <div id="energy-animation">ENERGY+</div>
+    <div id="message-popup"></div>
+
+    <!-- --- Instructions Modal --- -->
+    <div id="modal-instructions" class="modal show"> <!-- Show by default -->
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="info-title">Welcome, Explorer!</h2>
+            <p>Our TEDx mascot has lost all 11 'Sparks of Inspiration'! Help find them.</p>
+            <ul>
+                <li>Your <strong style="color:var(--fnb-blue)">Energy Bar</strong> depletes as you check-in or play
+                    games.</li>
+                <li>Visit the <strong style="color:var(--fnb-blue)">F&B Zone (Blue)</strong> to recharge! It's FREE to
+                    enter.</li>
+                <li><strong style="color:var(--tedx-red)">Red Hotspots</strong> cost 10 Energy.</li>
+                <li><strong style="color:var(--game-purple)">Purple Hotspots</strong> cost 20 Energy.</li>
+            </ul>
+            <p>Find all 11 stamps to win a prize! Good luck!</p>
+        </div>
+    </div>
+
+    <!-- --- Experience Shell --- -->
+    <main id="experience-shell">
+        <section class="map-panel">
+            <div class="panel-heading">
+                <p class="eyebrow">Interactive Map</p>
+                <h2>Navigate REXKL · The Confluence</h2>
+                <p>Tap any glowing hotspot on the map to collect all 11 inspiration stamps.</p>
+            </div>
+            <div id="map-container">
+                <div class="map-content-wrapper">
+                    <img src="./assets/map.png" alt="REXKL Experience Map" id="map-image">
+
+                    <div class="hotspot info" id="station-stage" data-modal="modal-station-stage"
+                        style="top: 20%; left: 50%;" title="Main Stage" aria-label="Main Stage checkpoint"></div>
+                    <div class="hotspot info" id="station-lounge" data-modal="modal-station-lounge"
+                        style="top: 30%; left: 30%;" title="Speaker Lounge" aria-label="Speaker Lounge"></div>
+                    <div class="hotspot info" id="station-booth1" data-modal="modal-station-booth1"
+                        style="top: 70%; left: 30%;" title="Partner Booth 1" aria-label="Partner Booth 1"></div>
+                    <div class="hotspot info" id="station-booth2" data-modal="modal-station-booth2"
+                        style="top: 70%; left: 70%;" title="Partner Booth 2" aria-label="Partner Booth 2"></div>
+                    <div class="hotspot info" id="station-art" data-modal="modal-station-art"
+                        style="top: 50%; left: 80%;" title="Art Installation" aria-label="Art Installation"></div>
+                    <div class="hotspot info" id="station-mrt" data-modal="modal-station-mrt"
+                        style="top: 85%; left: 50%;" title="Pasar Seni Link" aria-label="Pasar Seni Link"></div>
+                    <div class="hotspot info" id="station-info" data-modal="modal-station-info"
+                        style="top: 15%; left: 15%;" title="Info Desk" aria-label="Info Desk"></div>
+
+                    <div class="hotspot game" id="game-hangman" data-modal="modal-game-hangman"
+                        style="top: 30%; left: 70%;" title="Confluence Challenge" aria-label="Confluence Challenge"></div>
+                    <div class="hotspot game" id="game-chess" data-modal="modal-game-chess"
+                        style="top: 55%; left: 20%;" title="Strategy Challenge" aria-label="Strategy Challenge"></div>
+                    <div class="hotspot game" id="game-riddle" data-modal="modal-game-riddle"
+                        style="top: 80%; left: 80%;" title="Mind Challenge" aria-label="Mind Challenge"></div>
+
+                    <div class="hotspot fnb" id="fnb-zone" data-modal="modal-fnb-zone" style="top: 55%; left: 65%;"
+                        title="F&B Recharge Zone" aria-label="F and B Recharge Zone"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- --- All Modals --- -->
+
+    <!-- 7 Info Modals -->
+    <div id="modal-station-stage" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Main Stage</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-stage"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-lounge" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Speaker Lounge</h2>
+            <p>Costs 10 Energy</p>
+            <div class="iframe-container"><!-- ACTION: Google Form --><iframe src=""
+                    style="width:100%; height: 250px; border:none;" frameborder="0">...</iframe></div><button
+                class="checkin-btn" data-station-id="station-lounge" data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-booth1" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Partner Booth 1</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-booth1"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-booth2" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Partner Booth 2</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-booth2"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-art" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Art Installation</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-art"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-mrt" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Pasar Seni Link</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-mrt"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+    <div id="modal-station-info" class="modal">
+        <div class="modal-content"><span class="close-button">&times;</span>
+            <h2 class="info-title">Info Desk</h2>
+            <p>Costs 10 Energy</p><button class="checkin-btn" data-station-id="station-info"
+                data-cost="10">Check-in</button>
+        </div>
+    </div>
+
+    <!-- 3 Game Modals -->
+    <div id="modal-game-hangman" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon">🧩</div>
+            <h2 class="game-title">Confluence Challenge</h2>
+            <p>Cost: 20 Energy. Guess the 5-letter theme word!</p>
+            <div id="hangman-guesses">Guesses Left: 6</div>
+            <div id="hangman-word"></div>
+            <div id="hangman-keyboard"></div>
+            <div class="game-feedback" id="hangman-feedback"></div>
+            <button class="game-reset-btn" id="hangman-reset-btn" data-cost="5">Try Again (5 Energy)</button>
+        </div>
+    </div>
+    <div id="modal-game-chess" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon">🧩</div>
+            <h2 class="game-title">Strategy Challenge</h2>
+            <p>Cost: 20 Energy. White to move. Find the **Mate in One**.</p>
+            <div id="chess-board"></div>
+            <div class="game-feedback" id="chess-feedback" style="text-align:center;"></div>
+        </div>
+    </div>
+    <div id="modal-game-riddle" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon">🧩</div>
+            <h2 class="game-title">Mind Challenge</h2>
+            <p>Cost: 20 Energy. I have cities, but no houses. Mountains, but no trees. Water, but no fish. What am I?
+            </p>
+            <input type="text" id="riddle-input" class="game-input" placeholder="Your answer...">
+            <button class="hint-btn" id="riddle-hint-btn">Get a Hint</button>
+            <div id="riddle-hint">Hint: You're looking at one right now.</div>
+            <div class="game-feedback" id="riddle-feedback"></div>
+            <button class="game-submit-btn" id="riddle-submit">Submit Answer</button>
+            <button class="game-reset-btn" id="riddle-reset-btn" data-cost="5">Try Again (5 Energy)</button>
+        </div>
+    </div>
+
+    <!-- F&B Modal -->
+    <div id="modal-fnb-zone" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon">🥤</div>
+            <h2 class="fnb-title">F&B Recharge Zone</h2>
+            <p>Grab a drink to recharge! (The first drink also gives you a stamp!)</p>
+            <button class="fnb-btn" data-energy="30">Drink Coffee (+30 Energy)</button>
+            <button class="fnb-btn" data-energy="20">Drink Juice (+20 Energy)</button>
+            <button class="fnb-btn" data-energy="10">Drink Water (+10 Energy)</button>
+        </div>
+    </div>
+
+    <!-- NEW: Lucky Draw Modal (replaces old 'complete' modal) -->
+    <div id="modal-lucky-draw" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon" style="top:-30px; right: 50%; transform: translateX(50%) rotate(0deg);">🎉</div>
+            <h2 class="game-title">Congratulations!</h2>
+            <p>You've collected all 11 stamps! Answer the ultimate question to enter the Lucky Draw.</p>
+
+            <input type="text" id="lucky-draw-name" class="lucky-draw-input" placeholder="Your Full Name">
+            <input type="email" id="lucky-draw-email" class="lucky-draw-input" placeholder="Your Email Address">
+
+            <p style="margin-top: 20px;"><strong>Ultimate Question:</strong> What is the official theme of this year's
+                TEDxKL event?</p>
+            <input type="text" id="lucky-draw-answer" class="lucky-draw-input" placeholder="Your Answer...">
+
+            <div class="game-feedback" id="lucky-draw-feedback" style="text-align: center;"></div>
+
+            <button class="action-btn" id="lucky-draw-submit" style="background-color: var(--game-purple);">Submit to
+                Lucky Draw</button>
+        </div>
+    </div>
+
+    <!-- NEW: Final Reward Modal (shown after lucky draw submission) -->
+    <div id="modal-final-reward" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-button">&times;</span>
+            <div class="stamp-icon" style="top:-30px; right: 50%; transform: translateX(50%) rotate(0deg);">🎟️</div>
+            <h2 class="game-title">You're In!</h2>
+            <p>You have successfully entered the lucky draw! We will contact you via email if you win.</p>
+            <p>As a thank you, here is your <strong>10% Discount Code</strong> for the next TEDxKL:</p>
+            <h3 style="background: #111; padding: 15px; border-radius: 8px;">CONFLUENCE2025</h3>
+            <button class="action-btn" id="screenshot-btn">Screenshot My Reward!</button>
+        </div>
+    </div>
+
+    <!-- Profile Card Modal -->
+    <div id="modal-profile" class="modal">
+        <div class="modal-content">
+            <span class="close-button" style="color: var(--text-light);">&times;</span>
+            <h2 class="profile-name">Your Name</h2>
+            <img src="https://placehold.co/300x300/fff/000?text=Your+WhatsApp+QR+Code" alt="WhatsApp QR Code"
+                id="whatsapp-qr-code">
+            <p style="color: var(--text-dark); margin-top: 20px;">
+                Scan to start a WhatsApp chat with me!
+            </p>
+        </div>
+    </div>
+
+
+    <!-- --- JavaScript Logic (All Loops Closed) --- -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,759 @@
+:root {
+    --tedx-red: #FF2D55;
+    --game-purple: #8A2BE2;
+    --stamp-green: #00A86B;
+    --fnb-blue: #00AEEF;
+    --dark-bg: #2a2a2a;
+    --page-bg: #121212;
+    --text-light: #fff;
+    --text-dark: #aaa;
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+    background-color: var(--page-bg);
+    color: var(--text-light);
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: radial-gradient(circle at top, rgba(255, 45, 85, 0.15), transparent 45%), radial-gradient(circle at 20% 80%, rgba(0, 174, 239, 0.15), transparent 35%);
+    background-color: var(--page-bg);
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('./assets/map.png') center/cover no-repeat;
+    opacity: 0.07;
+    z-index: -1;
+    filter: grayscale(0.15) saturate(0.9);
+}
+
+#experience-shell {
+    display: flex;
+    justify-content: center;
+    padding: 120px clamp(16px, 5vw, 64px) 80px;
+    max-width: 720px;
+    margin: 0 auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#experience-shell.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.5s ease-out;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#start-screen h1 {
+    color: var(--tedx-red);
+    font-size: 2.5rem;
+}
+
+#start-button {
+    background-color: var(--tedx-red);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#start-button:hover {
+    transform: scale(1.05);
+}
+
+#start-button:active {
+    transform: scale(0.98);
+}
+
+
+#ui-bar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 500;
+    display: none;
+    /* Hidden initially */
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 15px;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+}
+
+#home-button,
+#reward-button {
+    background: rgba(0, 0, 0, 0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+#home-button:hover {
+    background: var(--tedx-red);
+}
+
+#home-button:active {
+    transform: scale(0.95);
+}
+
+#reward-button {
+    display: none;
+    /* Hidden until you win */
+    margin-right: 10px;
+    color: #FFD700;
+    /* Gold */
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 10px #FFD700;
+}
+
+#reward-button:hover {
+    background: #FFD700;
+    color: #000;
+}
+
+#reward-button:active {
+    transform: scale(0.95);
+}
+
+.ui-stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 10px;
+}
+
+#stamp-counter {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-light);
+}
+
+#energy-bar-container {
+    width: 120px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+#energy-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--fnb-blue), #00c8ff);
+    border-radius: 6px;
+    transition: width 0.5s ease-out;
+    box-shadow: 0 0 10px var(--fnb-blue);
+}
+
+#profile-button {
+    background: rgba(0, 0, 0, 0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#profile-button:hover {
+    background: var(--tedx-red);
+}
+
+#profile-button:active {
+    transform: scale(0.95);
+}
+
+/* --- Map Container (9:16 PORTRAIT RATIO) --- */
+#map-container {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 9 / 16;
+    max-height: 85vh;
+    margin: 0 auto;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #map-container {
+        max-width: 100%;
+    }
+}
+
+.map-content-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#map-container.show {
+    display: block;
+    animation: zoomIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#map-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.panel-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: var(--text-dark);
+}
+
+.panel-heading h2 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+.panel-heading p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* --- Hotspots --- */
+.hotspot {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px 32px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: floatPulse 3s ease-in-out infinite;
+}
+
+.hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+}
+
+.hotspot.info {
+    border-color: rgba(255, 45, 85, 0.8);
+    box-shadow: 0 0 0 8px rgba(255, 45, 85, 0.15);
+    background-image: url('./assets/exclamation.png');
+}
+
+.hotspot.game {
+    border-color: rgba(138, 43, 226, 0.8);
+    box-shadow: 0 0 0 8px rgba(138, 43, 226, 0.18);
+    background-image: url('./assets/question.png');
+}
+
+.hotspot.fnb {
+    border-color: rgba(0, 174, 239, 0.8);
+    box-shadow: 0 0 0 8px rgba(0, 174, 239, 0.18);
+    background-image: url('./assets/cup.png');
+    background-size: 28px 28px;
+}
+
+@keyframes floatPulse {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.08);
+    }
+}
+
+.hotspot.collected {
+    border-color: var(--stamp-green);
+    box-shadow: 0 0 0 10px rgba(0, 168, 107, 0.2);
+    animation: none;
+}
+
+.hotspot.collected::after {
+    content: '✓';
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--stamp-green);
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Modals --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--dark-bg);
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: 20px;
+}
+
+@keyframes bounceIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-content .info-title {
+    color: var(--tedx-red);
+}
+
+.modal-content .game-title {
+    color: var(--game-purple);
+}
+
+.modal-content .fnb-title {
+    color: var(--fnb-blue);
+}
+
+.stamp-icon {
+    font-size: 40px;
+    position: absolute;
+    top: -20px;
+    right: -15px;
+    transform: rotate(15deg);
+}
+
+.close-button {
+    color: var(--text-dark);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.close-button:hover {
+    color: var(--text-light);
+}
+
+.close-button:active {
+    transform: scale(0.9);
+}
+
+.checkin-btn,
+.game-submit-btn,
+.action-btn,
+.fnb-btn,
+.game-reset-btn {
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.1s, background-color 0.2s;
+    font-family: var(--font-main);
+}
+
+.checkin-btn {
+    background-color: var(--tedx-red);
+}
+
+.game-submit-btn {
+    background-color: var(--game-purple);
+}
+
+.action-btn {
+    background-color: var(--stamp-green);
+}
+
+.fnb-btn {
+    background-color: var(--fnb-blue);
+    margin-top: 10px;
+}
+
+.game-reset-btn {
+    background-color: #555;
+}
+
+.checkin-btn:active,
+.game-submit-btn:active,
+.action-btn:active,
+.fnb-btn:active,
+.game-reset-btn:active {
+    transform: scale(0.98);
+}
+
+.checkin-btn:disabled,
+.action-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.game-feedback {
+    font-size: 0.9rem;
+    color: #FFB8B8;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.iframe-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* --- Game Styles --- */
+#hangman-word {
+    font-size: 2rem;
+    letter-spacing: 0.5em;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#hangman-keyboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 5px;
+    margin-top: 20px;
+}
+
+#hangman-keyboard button {
+    font-size: 1rem;
+    padding: 10px 5px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    font-family: var(--font-main);
+}
+
+#hangman-keyboard button:active {
+    transform: scale(0.95);
+}
+
+#hangman-keyboard button:disabled {
+    background: #222;
+    color: #666;
+}
+
+#hangman-guesses {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--text-dark);
+}
+
+#hangman-reset-btn {
+    display: none;
+}
+
+/* Hidden by default */
+
+#chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+    border: 2px solid #666;
+}
+
+.square {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+}
+
+.square.light {
+    background-color: #f0d9b5;
+}
+
+.square.dark {
+    background-color: #b58863;
+}
+
+.square.valid-move {
+    box-shadow: inset 0 0 0 4px var(--stamp-green);
+}
+
+.piece {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+    cursor: grab;
+    user-select: none;
+}
+
+.hint-btn {
+    background: none;
+    border: 1px solid var(--text-dark);
+    color: var(--text-dark);
+    width: auto;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#riddle-hint {
+    display: none;
+    font-style: italic;
+    color: var(--text-dark);
+    margin-top: 10px;
+}
+
+.game-input,
+.lucky-draw-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #333;
+    border: 1px solid #555;
+    color: var(--text-light);
+    border-radius: 5px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+#riddle-reset-btn {
+    display: none;
+}
+
+/* Hidden by default */
+
+/* --- Pop-up Animations --- */
+#stamp-animation,
+#energy-animation,
+#message-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-light);
+    padding: 20px 40px;
+    border-radius: 10px;
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    text-align: center;
+}
+
+#stamp-animation {
+    background: var(--stamp-green);
+    box-shadow: 0 0 30px var(--stamp-green);
+}
+
+#energy-animation {
+    background: var(--fnb-blue);
+    box-shadow: 0 0 30px var(--fnb-blue);
+}
+
+#message-popup {
+    background: var(--tedx-red);
+    box-shadow: 0 0 30px var(--tedx-red);
+    font-size: 1.5rem;
+}
+
+#stamp-animation.show,
+#energy-animation.show,
+#message-popup.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate(-50%, -50%) translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate(-50%, -50%) translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate(-50%, -50%) translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate(-50%, -50%) translate3d(4px, 0, 0);
+    }
+}
+
+/* --- Profile Card Modal --- */
+#modal-profile .modal-content {
+    background: #1c1c1c;
+    border-top: 5px solid var(--tedx-red);
+    padding: 30px;
+    max-width: 350px;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+#whatsapp-qr-code {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    background-color: #fff;
+    /* Placeholder bg */
+}
